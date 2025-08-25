@@ -1,6 +1,3 @@
-Com certeza! Vamos transformar o README.md em um documento completo e profissional, digno de um portfólio, incorporando suas imagens e adicionando todos os detalhes técnicos relevantes que um outro desenvolvedor (ou um avaliador) esperaria encontrar.
-
-A estrutura abaixo está pronta. Siga as mesmas instruções de antes: crie o arquivo README.md e a pasta screenshots na raiz do seu projeto e cole o conteúdo abaixo.
 
 CRUD de Policiais - Avaliação Full Stack
 Tabela de Conteúdos
