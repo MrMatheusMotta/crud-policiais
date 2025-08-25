@@ -1,6 +1,16 @@
 <div class="container">
   <h1>Listagem de Policiais</h1>
 
+  <form [formGroup]="buscaForm" (ngSubmit)="buscarPoliciais()" class="busca-form">
+    <input 
+      type="text" 
+      formControlName="cpf" 
+      placeholder="Digite o CPF para buscar"
+      mask="000.000.000-00">
+    <button type="submit">Buscar</button>
+    <button type="button" (click)="limparBusca()">Limpar</button>
+  </form>
+
   <div *ngIf="policiais.length > 0; else semPoliciais" class="table-responsive">
     <table>
       <thead>
@@ -25,10 +35,11 @@
   </div>
 
   <ng-template #semPoliciais>
-    <p>Nenhum policial cadastrado ainda.</p>
+    <p>Nenhum policial encontrado.</p> 
   </ng-template>
 
-   <div *ngIf="erro" class="error-message">
+  <div *ngIf="erro" class="error-message">
     <p>{{ erro }}</p>
   </div>
+  
 </div>

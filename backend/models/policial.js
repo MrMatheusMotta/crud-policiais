@@ -9,29 +9,33 @@ class Policial {
     return { id: result.insertId, ...novoPolicial };
   }
 
-  static async findAll(filters = {}) {
-    let sql = 'SELECT * FROM policiais';
-    const params = [];
-    const whereClauses = [];
+static async findAll(filters = {}) {
+  let sql = 'SELECT * FROM policiais';
+  const params = [];
+  const whereClauses = [];
 
-    if (filters.cpf) {
-      whereClauses.push('cpf = ?');
-      params.push(filters.cpf);
-    }
+  if (filters.cpf) {
+    // Remove a pontuação do CPF vindo da busca, caso exista
+    const cpfLimpo = filters.cpf.replace(/[^\d]/g, '');
     
-    if (filters.rg) {
-     
-      whereClauses.push('(rg_civil = ? OR rg_militar = ?)');
-      params.push(filters.rg, filters.rg);
-    }
-
-    if (whereClauses.length > 0) {
-      sql += ' WHERE ' + whereClauses.join(' AND ');
-    }
-
-    const [rows] = await db.query(sql, params);
-    return rows;
+    // Usa a função REPLACE do SQL para limpar os dados do banco antes de comparar
+    whereClauses.push("REPLACE(REPLACE(cpf, '.', ''), '-', '') = ?");
+    params.push(cpfLimpo);
   }
+  
+  if (filters.rg) {
+    // A lógica de RG continua a mesma
+    whereClauses.push('(rg_civil = ? OR rg_militar = ?)');
+    params.push(filters.rg, filters.rg);
+  }
+
+  if (whereClauses.length > 0) {
+    sql += ' WHERE ' + whereClauses.join(' AND ');
+  }
+
+  const [rows] = await db.query(sql, params);
+  return rows;
+}
   
   static async findByUniqueFields({ cpf, rg_civil, rg_militar }) {
     const sql = 'SELECT * FROM policiais WHERE cpf = ? OR rg_civil = ? OR rg_militar = ?';

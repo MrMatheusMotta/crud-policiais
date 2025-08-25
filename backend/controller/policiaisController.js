@@ -18,6 +18,7 @@ exports.cadastrar = async (req, res) => {
     //   return res.status(400).json({ mensagem: 'Requisição inválida: O CPF informado é inválido.' });
     // }
     
+    const cpfLimpo = cpf.replace(/[^\d]/g, '');
 
     const policialExistente = await Policial.findByUniqueFields({ cpf, rg_civil, rg_militar });
     if (policialExistente) {
