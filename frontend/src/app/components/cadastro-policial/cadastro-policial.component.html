@@ -1,0 +1,54 @@
+<div class="form-container">
+  <h2>Cadastro de Policial</h2>
+  <form [formGroup]="policialForm" (ngSubmit)="onSubmit()">
+
+    <div class="form-group">
+      <label for="rg_civil">RG Civil</label>
+      <input id="rg_civil" type="text" formControlName="rg_civil" placeholder="00.000.000-0">
+      <div *ngIf="f['rg_civil'].touched && f['rg_civil'].invalid" class="error">
+        <small *ngIf="f['rg_civil'].errors?.['required']">RG Civil é obrigatório.</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="rg_militar">RG Militar</label>
+      <input id="rg_militar" type="text" formControlName="rg_militar" placeholder="00.000.000-0">
+      <div *ngIf="f['rg_militar'].touched && f['rg_militar'].invalid" class="error">
+        <small *ngIf="f['rg_militar'].errors?.['required']">RG Militar é obrigatório.</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="cpf">CPF</label>
+      <input id="cpf" type="text" formControlName="cpf" placeholder="000.000.000-00">
+      <div *ngIf="f['cpf'].touched && f['cpf'].invalid" class="error">
+        <small *ngIf="f['cpf'].errors?.['required']">CPF é obrigatório.</small>
+        <small *ngIf="f['cpf'].errors?.['pattern']">Formato de CPF inválido.</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="data_nascimento">Data de Nascimento</label>
+      <input id="data_nascimento" type="date" formControlName="data_nascimento">
+      <div *ngIf="f['data_nascimento'].touched && f['data_nascimento'].invalid" class="error">
+        <small *ngIf="f['data_nascimento'].errors?.['required']">Data de Nascimento é obrigatória.</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="matricula">Matrícula</label>
+      <input id="matricula" type="text" formControlName="matricula" placeholder="Sua matrícula">
+      <div *ngIf="f['matricula'].touched && f['matricula'].invalid" class="error">
+        <small *ngIf="f['matricula'].errors?.['required']">Matrícula é obrigatória.</small>
+      </div>
+    </div>
+
+    <button type="submit" [disabled]="policialForm.invalid || carregando">
+      {{ carregando ? 'Enviando...' : 'Cadastrar' }}
+    </button>
+  </form>
+
+  <div *ngIf="mensagem" [ngClass]="mensagem.tipo === 'sucesso' ? 'message success' : 'message error'">
+    {{ mensagem.texto }}
+  </div>
+</div>
